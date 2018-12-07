@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+mypy = "*"
+flake8 = "*"
+ipython = "*"
+pytest = "*"
+
+[packages]
+luigi = "*"
+fastText = {git = "https://github.com/facebookresearch/fastText.git",ref = "master"}
+mecab-python3 = "*"
+boto3 = "*"
+
+[requires]
+python_version = "3.7"

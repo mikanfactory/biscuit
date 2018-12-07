@@ -1,0 +1,10 @@
+version: 1
+formatters:
+  simple:
+    class: logging.Formatter
+
+handlers:
+  noop:
+    class: logging.NullHandler
+
+root:
