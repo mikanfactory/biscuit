@@ -54,10 +54,21 @@ lint/mypy:
 
 # test
 .PHONY: test
-BISCUIT_LOGGING_CONF := ./conf/logging.test.yaml
 test: 
-		echo $(BISCUIT_LOGGING_CONF)
 		$(common_env) $(PYTEST) tests
 
 # run tasks
 # ...
+
+.PHONY: auth*
+auth/generate-authroization-url:
+	$(PYTHON) ./scripts/auth.py generate-authroization-url
+
+auth/generate-access-token:
+	$(PYTHON) ./scripts/auth.py generate-access-token
+
+auth/test-retrive:
+	$(PYTHON) ./scripts/auth.py test-retrive | jq .
+
+# auth/upload:
+# upload access-token to CodeCommit

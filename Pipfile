@@ -8,12 +8,15 @@ mypy = "*"
 flake8 = "*"
 ipython = "*"
 pytest = "*"
+requests = "*"
+click = "*"
 
 [packages]
 luigi = "*"
 fastText = {git = "https://github.com/facebookresearch/fastText.git",ref = "master"}
 mecab-python3 = "*"
 boto3 = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.7"

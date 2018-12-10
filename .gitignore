@@ -4,3 +4,7 @@
 .mypy_cache
 .pytest_cache
 __pycache__/
+
+pocket_config.json
+pocket_request_token.json
+pocket_access_token.json
