@@ -6,13 +6,13 @@ class Item(object):
     pass
 
 
-def get_targets(date: dt.date) -> List[Item]:
+def get_targets(date: dt.date) -> List[Article]:
     pass
 
 
-def get_already_tagged_items() -> List[Item]:
+def get_already_tagged_article() -> List[Article]:
     pass
 
 
-def get_new_items(date: dt.date) -> List[Item]:
+def get_new_article(date: dt.date) -> List[Article]:
     pass

@@ -11,36 +11,54 @@ class Invoke(luigi.WrapperTask):
     date = luigi.DateParameter()
 
     def requires(self) -> luigi.Task:
-        return AddTagsToAllItems(self.date)
+        return AddTagToAllArticles(self.date)
 
 
-class AddTagsToAllItems(luigi.Task):
+class AddTagToAllArticles(luigi.Task):
     date = luigi.DateParameter()
 
     def requires(self) -> luigi.Task:
-        return GatherTagsForAllItems(self.date)
+        return GatherArticleTags(self.date)
+
+    def run(self) -> None:
+        pass
+
+    def output(self):
+        pass
 
 
-class GatherTagsForAllItems(luigi.Task):
+class GatherArticleTags(luigi.Task):
     date = luigi.DateParameter()
 
     def requires(self) -> luigi.Task:
         ret = []
         for item in core.get_targets(self.date):
-            ret.append(PredictTagForItem(self.date, item))
+            ret.append(PredictArticleTag(self.date, item))
 
         return ret
 
+    def run(self) -> None:
+        pass
 
-class PredictTagForItem(luigi.Task):
+    def output(self):
+        pass
+
+
+class PredictArticleTag(luigi.Task):
     date = luigi.DateParameter()
     item = luigi.Parameter()
 
     def requires(self) -> luigi.Task:
-        return DownloadMetadata(self.date, self.item)
+        return DownloadDocument(self.date, self.item)
+
+    def run(self) -> None:
+        pass
+
+    def output(self):
+        pass
 
 
-class DownloadMetadata(luigi.Task):
+class DownloadDocument(luigi.Task):
     date = luigi.DateParameter()
     item = luigi.Parameter()
 
