@@ -70,5 +70,8 @@ auth/generate-access-token:
 auth/test-retrive:
 	$(PYTHON) ./scripts/auth.py test-retrive | jq .
 
-# auth/upload:
-# upload access-token to CodeCommit
+auth/upload:
+	aws s3 cp pocket_token/ s3://pocket-biscuit/pocket-token/ --recursive
+
+auth/download:
+	aws s3 cp s3://pocket-biscuit/pocket-token/ pocket_token/ --recursive

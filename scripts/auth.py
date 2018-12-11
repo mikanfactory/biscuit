@@ -12,9 +12,9 @@ with open("./conf/logging.yaml", 'r') as c:
 
 logger = getLogger('scripts/auth')
 
-POCKET_CONFIG_FILE_PATH = './pocket_config.json'
-POCKET_ACCESS_TOKEN_PATH = './pocket_access_token.json'
-POCKET_REQUEST_TOKEN_PATH = './pocket_request_token.json'
+POCKET_CONFIG_FILE_PATH = './pocket_token/pocket_config.json'
+POCKET_ACCESS_TOKEN_PATH = './pocket_token/pocket_access_token.json'
+POCKET_REQUEST_TOKEN_PATH = './pocket_token/pocket_request_token.json'
 
 
 def _read_file(path: str) -> Dict:
@@ -28,7 +28,7 @@ def _write_file(path: str, data: Dict) -> None:
     elif path == POCKET_REQUEST_TOKEN_PATH:
         message = f'Request token saved to {path}.'
     else:
-        raise ValueError("Trying to write wrong place.")
+        raise ValueError("Trying to write wrong path.")
 
     with open(path, 'w+') as f:
         json.dump(data, f)
@@ -78,8 +78,8 @@ def generate_authroization_url() -> None:
 
     _write_file(POCKET_REQUEST_TOKEN_PATH, {'code': code})
 
-    base_url = 'https://getpocket.com/auth/authorize?'
-    url = base_url + f'request_token={code}' + '&' + f'redirect_uri={redirect_uri}'
+    base_url = 'https://getpocket.com/auth/authorize'
+    url = f'{base_url}?request_token={code}&redirect_uri={redirect_uri}'
     logger.info(f'Authorization URL generated: {url}')
 
 
