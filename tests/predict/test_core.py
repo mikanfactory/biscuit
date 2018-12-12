@@ -1,9 +1,13 @@
+import datetime as dt
+from unittest.mock import patch
+
+
 from biscuit.predict import core
 
 
-def test_build_article():
-    data = {
-        "item_id": "1",
+def build_article_fixture(item_id="1"):
+    return {
+        "item_id": item_id,
         "resolved_id": "1",
         "given_url": "http://foo.bar.com/entry/2018/1/1",
         "given_title": "foobarbazz",
@@ -26,6 +30,21 @@ def test_build_article():
         "top_image_url": "https://foo.bar.com/foo.png",
         "listen_duration_estimate": 307
     }
+
+
+def build_article_fixtures():
+    acc = {str(i): build_article_fixture(str(i)) for i in range(1, 3)}
+    return {
+        'status': 1,
+        'complete': 0,
+        'list': acc,
+        'error': None,
+        'since': 1544633513
+    }
+
+
+def test_build_article():
+    data = build_article_fixture()
     article = core.build_article(data)
     assert article
     assert article == core.Article(
@@ -36,3 +55,26 @@ def test_build_article():
         "ja"
     )
     assert article.document == core.Document("")
+
+
+@patch('biscuit.predict.core._post', return_value=build_article_fixtures())
+def test_get_targets(mock):
+    date = dt.datetime(2018, 12, 1)
+    actual = core.get_targets(date)
+    assert actual
+    assert actual == [
+        core.Article(
+            "1",
+            "1",
+            "http://foo.bar.com/entry/2018/1/1",
+            "foobarbazz",
+            "ja"
+        ),
+        core.Article(
+            "2",
+            "1",
+            "http://foo.bar.com/entry/2018/1/1",
+            "foobarbazz",
+            "ja"
+        ),
+    ]
