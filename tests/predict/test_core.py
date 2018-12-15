@@ -1,5 +1,5 @@
 import datetime as dt
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 
 from biscuit.predict import core
@@ -52,9 +52,9 @@ def test_build_article():
         "1",
         "http://foo.bar.com/entry/2018/1/1",
         "foobarbazz",
-        "ja"
+        "ja",
+        ""
     )
-    assert article.document == core.Document("")
 
 
 @patch('biscuit.predict.core._post', return_value=build_article_fixtures())
@@ -68,13 +68,30 @@ def test_get_targets(mock):
             "1",
             "http://foo.bar.com/entry/2018/1/1",
             "foobarbazz",
-            "ja"
+            "ja",
+            ""
         ),
         core.Article(
             "2",
             "1",
             "http://foo.bar.com/entry/2018/1/1",
             "foobarbazz",
-            "ja"
+            "ja",
+            ""
         ),
     ]
+
+
+@patch('requests.get', return_value=Mock(text="Lorem ipsum"))
+def test_download_document(mock):
+    a = core.Article("", "", "https://arxiv.org/abs/1810.04805", "", "", "arXiv")
+    core.download_document(a)
+    assert mock.call_args == (("https://arxiv.org/abs/1810.04805",),)
+
+    b = core.Article("", "", "https://arxiv.org/pdf/1810.04805.pdf", "", "", "arXiv")
+    core.download_document(b)
+    assert mock.call_args == (("https://arxiv.org/abs/1810.04805",),)
+
+    c = core.Article("", "", "http://foo.bar.com/entry/2018/1/1", "", "", "arXiv")
+    core.download_document(c)
+    assert mock.call_args == (("http://foo.bar.com/entry/2018/1/1",),)
