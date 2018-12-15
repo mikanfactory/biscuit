@@ -17,6 +17,10 @@ fastText = {git = "https://github.com/facebookresearch/fastText.git",ref = "mast
 mecab-python3 = "*"
 boto3 = "*"
 pyyaml = "*"
+beautifulsoup4 = "*"
+lxml = "*"
+html5lib = "*"
+neologdn = "*"
 
 [requires]
 python_version = "3.7"
