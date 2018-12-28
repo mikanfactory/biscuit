@@ -68,7 +68,7 @@ def get_targets(date: dt.datetime) -> List[Article]:
 
 
 def download_document(article: Article) -> str:
-    if is_arXiv_pdf(article):
+    if _is_arXiv_pdf(article):
         url = re.sub(r'\/pdf\/', '/abs/', article.resolved_url)
         url = re.sub(r'\.pdf$', '', url)
         return requests.get(url).text

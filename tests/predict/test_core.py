@@ -92,6 +92,6 @@ def test_download_document(mock):
     core.download_document(b)
     assert mock.call_args == (("https://arxiv.org/abs/1810.04805",),)
 
-    c = core.Article("", "", "http://foo.bar.com/entry/2018/1/1", "", "", "arXiv")
+    c = core.Article("", "", "http://foo.bar.com/entry/2018/1/1", "", "", "")
     core.download_document(c)
     assert mock.call_args == (("http://foo.bar.com/entry/2018/1/1",),)
